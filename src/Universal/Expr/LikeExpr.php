@@ -41,7 +41,6 @@ class LikeExpr implements ToSqlInterface
             break;
 
         case Criteria::EXACT:
-            $pat = $pat;
             break;
 
         default:
@@ -49,13 +48,15 @@ class LikeExpr implements ToSqlInterface
             break;
         }
 
+
         if ($isBind) {
-            $this->pat->setValue($pat);
+            $this->pat->setForQuery($pat);
+            $queryPat = $this->pat;
         } else {
-            $this->pat = $pat;
+            $queryPat = $pat;
         }
 
-        return $this->exprStr.' LIKE '.$driver->deflate($this->pat, $args);
+        return $this->exprStr.' LIKE '.$driver->deflate($queryPat, $args);
     }
 
     public static function __set_state(array $array)

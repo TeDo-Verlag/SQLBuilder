@@ -14,7 +14,7 @@ class ArgumentArray extends ArrayObject
     public function push(Bind $bind)
     {
         $this->bindings[] = $bind;
-        $this[$bind->getMarker()] = $bind->getValue();
+        $this[$bind->getMarker()] = $bind->getForQuery();
     }
 
     // Deprecated 
@@ -22,13 +22,13 @@ class ArgumentArray extends ArrayObject
     {
         // trigger_error("Bind::add is deprecated, please use Bind::bind instead.", E_USER_DEPRECATED);
         $this->bindings[] = $bind;
-        $this[$bind->getMarker()] = $bind->getValue();
+        $this[$bind->getMarker()] = $bind->getForQuery();
     }
 
     public function bind($bind)
     {
         $this->bindings[] = $bind;
-        $this[$bind->getMarker()] = $bind->getValue();
+        $this[$bind->getMarker()] = $bind->getForQuery();
     }
 
     public function getBindingByIndex($idx)
@@ -58,7 +58,7 @@ class ArgumentArray extends ArrayObject
         if ($removeBinds) {
             $args = array();
             foreach ($this as $key => $val) {
-                $args[$key] = $val instanceof Bind ? $val->getValue() : $val;
+                $args[$key] = $val instanceof Bind ? $val->getForQuery() : $val;
             }
 
             return $args;

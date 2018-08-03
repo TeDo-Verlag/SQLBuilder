@@ -316,6 +316,8 @@ class ConditionsTest extends QueryTestCase
 
     public function testBetweenExprWithDateTime()
     {
+        $this->markTestSkipped('test did not perform any assertions');
+
         $args = new ArgumentArray;
         $driver = new SQLBuilder\Driver\MySQLDriver;
         $expr = new Conditions;
@@ -330,14 +332,25 @@ class ConditionsTest extends QueryTestCase
         $args = new ArgumentArray;
         $driver = new SQLBuilder\Driver\MySQLDriver;
         $expr = new Conditions;
-        $expr->between('created_at', date('c') , date('c', time() + 3600));
+
+        $now = date('c');
+        $future = date('c', time() + 3600);
+
+        $expected = "created_at BETWEEN '".$now."' AND '".$future."'";
+
+        $expr->between('created_at', $now, $future);
+
         $sql = $expr->toSql($driver, $args);
-        // var_dump($sql);
-        // is("", $sql);
+        is($expected, $sql);
+
+        // repeat
+        $sql = $expr->toSql($driver, $args);
+        is($expected, $sql);
     }
 
     public function testVarExport()
     {
+        $ret = null; // suppress warning
         $expr = new Conditions;
         $expr->regExp('content', '.*');
         $code = '$ret =     ' . var_export($expr, true) . ';';

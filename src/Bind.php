@@ -8,6 +8,10 @@ class Bind
 
     protected $value;
 
+    protected $valueForQuery;
+
+    protected $differentForQuery = false;
+
     public function __construct($name, $value = null)
     {
         $this->name = $name;
@@ -22,6 +26,15 @@ class Bind
     public function getValue()
     {
         return $this->value;
+    }
+
+    public function setForQuery($escaped) {
+        $this->valueForQuery = $escaped;
+        $this->differentForQuery = true;
+    }
+
+    public function getForQuery() {
+        return $this->differentForQuery ? $this->valueForQuery : $this->getValue();
     }
 
     public function getName()

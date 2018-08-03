@@ -80,6 +80,19 @@ class SelectQueryTest extends PDOQueryTestCase
         $this->assertQuery($query);
     }
 
+    public function testLikeExprAndArgument() {
+        $query = new SelectQuery;
+        $query->select(array('id', 'name', 'sn', 'content'))
+            ->from('products');
+        $query->where()->like('name', new Bind('name','John'));
+
+        $expected = "SELECT id, name, sn, content FROM products WHERE name LIKE :name";
+        $this->assertSql($expected, $query);
+
+        // repeat
+        $this->assertSql($expected, $query);
+        $this->assertQuery($query);
+    }
 
     public function testMySQLSelectUseSqlCache() {
         $query = new SelectQuery;
