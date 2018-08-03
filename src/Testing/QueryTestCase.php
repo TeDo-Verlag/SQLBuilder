@@ -21,7 +21,7 @@ abstract class QueryTestCase extends \PHPUnit\Framework\TestCase
         // XXX:
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->currentDriver = $this->createDriver();
         $this->args = new ArgumentArray();

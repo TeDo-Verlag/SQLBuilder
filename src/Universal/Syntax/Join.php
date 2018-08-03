@@ -13,6 +13,8 @@ class Join implements ToSqlInterface
 {
     use IndexHintTrait;
 
+    public $table;
+
     public $conditions;
 
     public $alias;

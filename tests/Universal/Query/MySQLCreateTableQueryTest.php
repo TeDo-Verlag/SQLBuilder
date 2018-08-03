@@ -14,7 +14,7 @@ class MySQLCreateTableQueryTest extends PDOQueryTestCase
         return new MySQLDriver;
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -26,7 +26,7 @@ class MySQLCreateTableQueryTest extends PDOQueryTestCase
         }
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         foreach(array('users','groups','authors', 'points') as $table) {
             $dropQuery = new DropTableQuery($table);

@@ -17,13 +17,13 @@ class AlterTableQueryTest extends PDOQueryTestCase
         return new MySQLDriver;
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->testCreateTables();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->cleanUpTables();

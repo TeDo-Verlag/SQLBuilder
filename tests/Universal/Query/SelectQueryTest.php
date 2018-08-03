@@ -22,7 +22,7 @@ class SelectQueryTest extends PDOQueryTestCase
         return new MySQLDriver;
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -46,7 +46,7 @@ class SelectQueryTest extends PDOQueryTestCase
         $this->assertQuery($q);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $q = new DropTableQuery('products');
@@ -80,6 +80,19 @@ class SelectQueryTest extends PDOQueryTestCase
         $this->assertQuery($query);
     }
 
+    public function testLikeExprAndArgument() {
+        $query = new SelectQuery;
+        $query->select(array('id', 'name', 'sn', 'content'))
+            ->from('products');
+        $query->where()->like('name', new Bind('name','John'));
+
+        $expected = "SELECT id, name, sn, content FROM products WHERE name LIKE :name";
+        $this->assertSql($expected, $query);
+
+        // repeat
+        $this->assertSql($expected, $query);
+        $this->assertQuery($query);
+    }
 
     public function testMySQLSelectUseSqlCache() {
         $query = new SelectQuery;

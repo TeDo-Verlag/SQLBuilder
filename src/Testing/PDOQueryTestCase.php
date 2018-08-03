@@ -176,10 +176,12 @@ abstract class PDOQueryTestCase extends QueryTestCase
         return $this->pdo;
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!extension_loaded('pdo')) {
-            return skip('pdo extension is required');
+            skip('pdo extension is required');
+
+            return;
         }
 
         // XXX: check pdo driver

@@ -129,7 +129,7 @@ abstract class BaseDriver
             return call_user_func($this->quoter, $string);
         }
 
-        // Defualt escape function, this is not safe.
+        // Default escape function, this is not safe.
         return "'".addslashes($string)."'";
     }
 
